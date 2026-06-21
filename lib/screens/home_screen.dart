@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../models/meal_category.dart';
 import '../models/meal_summary.dart';
+import '../services/auth_service.dart';
 import '../services/meal_api.dart';
 import '../widgets/meal_card.dart';
 import '../widgets/status_views.dart';
@@ -22,6 +23,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final MealApi _api = MealApi();
+  final AuthService _auth = AuthService();
 
   // Async future-of-data fields. Re-assigning these and calling setState is
   // how each screen state (loading / error / empty / data) gets driven —
@@ -99,6 +101,29 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Future<void> _confirmLogout() async {
+    final shouldLogout = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Log out?'),
+        content: const Text('You will be returned to the sign-in screen.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: const Text('Log out'),
+          ),
+        ],
+      ),
+    );
+    if (shouldLogout == true) {
+      await _auth.signOut();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,6 +134,11 @@ class _HomeScreenState extends State<HomeScreen> {
             tooltip: 'Refresh',
             onPressed: _reloadMeals,
             icon: const Icon(Icons.refresh_rounded),
+          ),
+          IconButton(
+            tooltip: 'Log out',
+            onPressed: _confirmLogout,
+            icon: const Icon(Icons.logout_rounded),
           ),
         ],
       ),
