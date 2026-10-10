@@ -19,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final MealApi _api = MealApi();
-  final AuthService _auth = AuthService();
+  late final AuthService _auth = AuthService();
 
   late Future<List<MealCategory>> _categoriesFuture;
   late Future<List<MealSummary>> _mealsFuture;
@@ -227,10 +227,9 @@ class _HomeScreenState extends State<HomeScreen> {
         }
 
         return RefreshIndicator(
-          onRefresh: () async {
-            _reloadMeals();
-            await _mealsFuture;
-          },
+          // Not awaited: the grid swaps to the loading view right away, and a
+          // failed request is shown there instead of thrown from here.
+          onRefresh: () async => _reloadMeals(),
           child: GridView.builder(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
