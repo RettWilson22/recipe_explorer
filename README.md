@@ -62,7 +62,7 @@ flutter pub get
 flutter run -d chrome
 ```
 
-The tests only cover the JSON parsing in the meal models (missing fields, joining ingredients with their measurements, the ingredient image URL), so they don't need Firebase or a network:
+The tests cover the JSON parsing in the meal models (missing fields, joining ingredients with their measurements, the ingredient image URL) and two home screen cases: pulling to refresh while offline, and the category chips coming back after a failed start. The home screen tests use a mock HTTP client, so none of the tests need Firebase or a network:
 
 ```bash
 flutter test
