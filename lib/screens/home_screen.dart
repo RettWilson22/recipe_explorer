@@ -68,12 +68,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onCategoryTap(String name) {
-    if (_searchQuery.isNotEmpty) {
-      // Clearing the search box returns to category-browse mode and avoids
-      // the confusing "showing results for 'X' inside category 'Y'" overlap.
-      _searchController.clear();
-      _searchQuery = '';
-    }
+    // Tapping a category leaves search mode, including a search still waiting
+    // on the debounce.
+    _debounce?.cancel();
+    _searchController.clear();
+    _searchQuery = '';
     setState(() {
       _selectedCategory = name;
       _mealsFuture = _api.fetchMealsByCategory(name);
