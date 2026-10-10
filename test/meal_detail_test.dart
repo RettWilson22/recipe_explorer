@@ -47,7 +47,8 @@ void main() {
 
       expect(detail.id, '1');
       expect(detail.category, 'Beef');
-      expect(detail.area, isNull, reason: 'whitespace should normalize to null');
+      expect(detail.area, isNull,
+          reason: 'whitespace should normalize to null');
       expect(detail.youtubeUrl, isNull);
       expect(detail.sourceUrl, 'https://example.com');
       expect(detail.tags, ['easy', 'quick']);

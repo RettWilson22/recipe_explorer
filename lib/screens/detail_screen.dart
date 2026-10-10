@@ -91,8 +91,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 child: EmptyView(
                   icon: Icons.no_food_rounded,
                   title: 'Recipe details unavailable',
-                  message:
-                      'The API did not return details for this recipe. '
+                  message: 'The API did not return details for this recipe. '
                       'Please try another.',
                 ),
               ),
@@ -205,16 +204,19 @@ class _DetailBody extends StatelessWidget {
             ),
           ],
           const SizedBox(height: 24),
-          const _SectionHeader(icon: Icons.shopping_basket_rounded, label: 'Ingredients'),
+          const _SectionHeader(
+              icon: Icons.shopping_basket_rounded, label: 'Ingredients'),
           const SizedBox(height: 12),
           _IngredientsList(detail: detail),
           const SizedBox(height: 28),
-          const _SectionHeader(icon: Icons.menu_book_rounded, label: 'Instructions'),
+          const _SectionHeader(
+              icon: Icons.menu_book_rounded, label: 'Instructions'),
           const SizedBox(height: 12),
           Text(
             detail.instructions ??
                 'No instructions were provided for this recipe.',
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.45),
+            style:
+                Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.45),
           ),
           if (detail.youtubeUrl != null || detail.sourceUrl != null) ...[
             const SizedBox(height: 28),
@@ -361,8 +363,7 @@ class _IngredientsList extends StatelessWidget {
           for (var i = 0; i < detail.ingredients.length; i++) ...[
             if (i > 0) Divider(height: 1, color: scheme.outlineVariant),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               child: Row(
                 children: [
                   ClipRRect(

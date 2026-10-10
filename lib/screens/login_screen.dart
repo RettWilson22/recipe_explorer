@@ -102,14 +102,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     label: 'Password',
                     obscureText: true,
                     autofillHints: const [AutofillHints.password],
-                    validator: (v) =>
-                        (v == null || v.isEmpty) ? 'Password is required.' : null,
+                    validator: (v) => (v == null || v.isEmpty)
+                        ? 'Password is required.'
+                        : null,
                   ),
                   if (_errorMessage != null) ...[
                     const SizedBox(height: 16),
                     Text(
                       _errorMessage!,
-                      style: TextStyle(color: Theme.of(context).colorScheme.error),
+                      style:
+                          TextStyle(color: Theme.of(context).colorScheme.error),
                       textAlign: TextAlign.center,
                     ),
                   ],

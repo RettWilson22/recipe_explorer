@@ -93,7 +93,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     obscureText: true,
                     autofillHints: const [AutofillHints.newPassword],
                     validator: (v) {
-                      if (v == null || v.isEmpty) return 'Password is required.';
+                      if (v == null || v.isEmpty) {
+                        return 'Password is required.';
+                      }
                       if (v.length < 6) {
                         return 'Use at least 6 characters.';
                       }
@@ -116,7 +118,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(height: 16),
                     Text(
                       _errorMessage!,
-                      style: TextStyle(color: Theme.of(context).colorScheme.error),
+                      style:
+                          TextStyle(color: Theme.of(context).colorScheme.error),
                       textAlign: TextAlign.center,
                     ),
                   ],
