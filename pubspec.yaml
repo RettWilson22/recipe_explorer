@@ -31,13 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # HTTP client for talking to TheMealDB REST API.
   http: ^1.2.1
-
-  # Async image loader with in-memory + on-disk caching, placeholders, and errors.
   cached_network_image: ^3.3.1
-
-  # Opens recipe source and YouTube tutorial links in an external browser.
   url_launcher: ^6.2.5
 
   # The following adds the Cupertino Icons font to your application.

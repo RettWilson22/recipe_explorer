@@ -15,16 +15,9 @@ class MealApiException implements Exception {
 }
 
 /// Client for TheMealDB, using the public test key `1`.
-///
-/// Endpoints used:
-///   * `categories.php`           -> high-level category list
-///   * `filter.php?c=<category>`  -> meals inside a category (id/name/thumb)
-///   * `search.php?s=<query>`     -> full-text search across meal names
-///   * `lookup.php?i=<id>`        -> full record for one meal
 class MealApi {
   static const String _base = 'https://www.themealdb.com/api/json/v1/1';
 
-  // Allow tests to inject a mock client. Defaults to a real http.Client.
   final http.Client _client;
   MealApi({http.Client? client}) : _client = client ?? http.Client();
 
