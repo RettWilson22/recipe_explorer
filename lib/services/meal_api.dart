@@ -6,9 +6,7 @@ import '../models/meal_category.dart';
 import '../models/meal_detail.dart';
 import '../models/meal_summary.dart';
 
-/// Thrown when an API call fails (network down, non-200 response, malformed
-/// JSON). The screens catch this and show a friendly retry view instead of
-/// letting the exception crash the app.
+/// An API failure with a message that can be shown to the user.
 class MealApiException implements Exception {
   final String message;
   MealApiException(this.message);
@@ -16,10 +14,7 @@ class MealApiException implements Exception {
   String toString() => message;
 }
 
-/// Thin wrapper around TheMealDB's public REST API.
-///
-/// TheMealDB is a free, key-less recipe API. We use the public test key `1`
-/// which is the standard demo key advertised on themealdb.com.
+/// Client for TheMealDB, using the public test key `1`.
 ///
 /// Endpoints used:
 ///   * `categories.php`           -> high-level category list
@@ -33,8 +28,6 @@ class MealApi {
   final http.Client _client;
   MealApi({http.Client? client}) : _client = client ?? http.Client();
 
-  /// Returns every top-level meal category. Used to render the chip row on the
-  /// home screen.
   Future<List<MealCategory>> fetchCategories() async {
     final json = await _getJson('$_base/categories.php');
     final list = json['categories'];
@@ -45,26 +38,19 @@ class MealApi {
         .toList();
   }
 
-  /// Returns meal summaries inside [categoryName] (e.g. "Beef", "Dessert").
-  /// `filter.php` returns `{"meals": null}` for empty categories — we normalize
-  /// that to an empty list so the caller doesn't have to special-case null.
   Future<List<MealSummary>> fetchMealsByCategory(String categoryName) async {
     final uri = '$_base/filter.php?c=${Uri.encodeQueryComponent(categoryName)}';
     return _parseMealSummaries(await _getJson(uri));
   }
 
-  /// Full-text search across meal names. Same null-meals handling as
-  /// [fetchMealsByCategory].
   Future<List<MealSummary>> searchMeals(String query) async {
     final uri = '$_base/search.php?s=${Uri.encodeQueryComponent(query)}';
     final json = await _getJson(uri);
-    // `search.php` returns the FULL meal record per hit, but we only need the
-    // summary fields here; MealSummary.fromJson tolerates extra fields.
+    // search.php returns full records; only the summary fields are kept.
     return _parseMealSummaries(json);
   }
 
-  /// Fetches the complete record for a single meal id, including instructions
-  /// and ingredients. Returns null if TheMealDB has no meal with that id.
+  /// Returns null if there's no meal with that id.
   Future<MealDetail?> fetchMealDetail(String id) async {
     final uri = '$_base/lookup.php?i=${Uri.encodeQueryComponent(id)}';
     final json = await _getJson(uri);

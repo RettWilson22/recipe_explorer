@@ -5,9 +5,7 @@ import '../services/auth_service.dart';
 import '../widgets/auth_text_field.dart';
 import 'sign_up_screen.dart';
 
-/// Email + password sign-in form. On success the [AuthGate] picks up the
-/// auth-state change and swaps in the home screen — no manual navigation
-/// needed from here.
+/// No navigation on success: [AuthGate] sees the new user and shows home.
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 

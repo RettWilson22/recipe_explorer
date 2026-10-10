@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import '../widgets/auth_text_field.dart';
 
-/// Email + password account creation. The [AuthGate] handles the post-signup
-/// routing, so this screen just dismisses itself on success.
+/// Pops itself on success and lets [AuthGate] show the home screen.
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 

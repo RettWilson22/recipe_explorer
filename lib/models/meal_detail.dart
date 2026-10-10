@@ -1,6 +1,4 @@
-/// A fully populated meal record returned by TheMealDB `lookup.php?i=<id>`
-/// endpoint. Contains the heavyweight fields (instructions, ingredient list,
-/// video/source links) that the list screen does not need.
+/// The full meal record from `lookup.php?i=<id>`.
 class MealDetail {
   final String id;
   final String name;
@@ -26,11 +24,9 @@ class MealDetail {
     required this.tags,
   });
 
-  /// Parses a single meal object from TheMealDB. The API stores ingredients in
-  /// up to 20 parallel fields (`strIngredient1`..`strIngredient20`) with
-  /// matching measurement fields (`strMeasure1`..`strMeasure20`); this factory
-  /// stitches the two together and drops empty rows so callers get a clean
-  /// list of [Ingredient] objects.
+  /// TheMealDB stores ingredients in 20 numbered fields
+  /// (`strIngredient1`..`strIngredient20`) with matching `strMeasureN` fields.
+  /// This pairs them up and skips the empty slots.
   factory MealDetail.fromJson(Map<String, dynamic> json) {
     final ingredients = <Ingredient>[];
     for (var i = 1; i <= 20; i++) {
@@ -67,8 +63,7 @@ class MealDetail {
   }
 }
 
-/// One row in a meal's ingredient list. [measure] may be empty for ingredients
-/// like "salt to taste" where the API omits a measurement.
+/// [measure] can be empty, e.g. for "salt to taste".
 class Ingredient {
   final String name;
   final String measure;

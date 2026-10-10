@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Centralizes the visual style for the app so every screen feels like part of
-/// the same project. We use Material 3 with a warm orange seed (matching the
-/// food/recipe theme) and a few small tweaks to AppBar and Card styles for a
-/// more polished look than the defaults.
 class AppTheme {
   static const Color seed = Color(0xFFE85D04); // warm pumpkin orange
 

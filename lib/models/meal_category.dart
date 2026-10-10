@@ -1,6 +1,4 @@
-/// A high-level food category (e.g. "Beef", "Dessert", "Seafood") returned by
-/// TheMealDB `categories.php` endpoint. Used to drive the category filter row
-/// on the home screen.
+/// A category from `categories.php`, like "Beef" or "Dessert".
 class MealCategory {
   final String id;
   final String name;
@@ -14,9 +12,7 @@ class MealCategory {
     required this.description,
   });
 
-  /// Builds a [MealCategory] from a single JSON object inside the
-  /// `categories` array. Missing fields fall back to empty strings so a
-  /// partial response from the API never crashes the UI.
+  /// Missing fields become empty strings.
   factory MealCategory.fromJson(Map<String, dynamic> json) {
     return MealCategory(
       id: (json['idCategory'] ?? '').toString(),

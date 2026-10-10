@@ -3,10 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../models/meal_summary.dart';
 
-/// A card representing one meal in the home-screen grid. Shows the meal's
-/// thumbnail with a gradient overlay so the name stays readable on top of the
-/// photo. Tapping the card invokes [onTap], which the parent uses to push the
-/// detail route.
 class MealCard extends StatelessWidget {
   final MealSummary meal;
   final VoidCallback onTap;
@@ -21,8 +17,6 @@ class MealCard extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            // Cached thumbnail with a graceful placeholder + error icon so a
-            // single broken image never breaks the grid layout.
             CachedNetworkImage(
               imageUrl: meal.thumbnailUrl,
               fit: BoxFit.cover,
@@ -43,8 +37,7 @@ class MealCard extends StatelessWidget {
                 ),
               ),
             ),
-            // Dark gradient at the bottom so the title is readable regardless
-            // of how busy the underlying photo is.
+            // Keeps the white title readable on bright photos.
             Positioned.fill(
               child: DecoratedBox(
                 decoration: BoxDecoration(

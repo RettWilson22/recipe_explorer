@@ -7,10 +7,7 @@ import '../models/meal_summary.dart';
 import '../services/meal_api.dart';
 import '../widgets/status_views.dart';
 
-/// Detail screen for one meal. Receives a [MealSummary] (id + name + thumb)
-/// from the home screen and immediately fires off the full lookup. The header
-/// shows the thumbnail straight from the summary so users see SOMETHING
-/// instant while the rest of the record loads.
+/// Shows the summary's photo and name right away while the full recipe loads.
 class DetailScreen extends StatefulWidget {
   final MealSummary meal;
   const DetailScreen({super.key, required this.meal});
@@ -113,9 +110,7 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 }
 
-/// The shared layout chrome used by every detail-screen state. Pulls the hero
-/// image up into the app bar via a [SliverAppBar] so the header looks polished
-/// even when the body is still loading.
+/// Collapsing photo header shared by the loading, error and loaded states.
 class _ScaffoldShell extends StatelessWidget {
   final String title;
   final String thumbnailUrl;
@@ -182,9 +177,6 @@ class _ScaffoldShell extends StatelessWidget {
   }
 }
 
-/// Renders the loaded [MealDetail] inside the scroll view: meta-chips,
-/// ingredients table, instructions text, and any source / video links the API
-/// gave us.
 class _DetailBody extends StatelessWidget {
   final MealDetail detail;
   final void Function(String url) onOpenUrl;

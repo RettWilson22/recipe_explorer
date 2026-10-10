@@ -2,9 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:recipe_explorer/models/meal_detail.dart';
 import 'package:recipe_explorer/models/meal_summary.dart';
 
-/// Sanity tests for the JSON -> model conversion. These exercise the parts of
-/// the code that are most prone to silent breakage (key typos, off-by-one on
-/// the 20 ingredient slots, empty-string normalization).
 void main() {
   group('MealSummary.fromJson', () {
     test('reads id, name, thumb', () {

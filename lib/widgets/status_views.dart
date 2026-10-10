@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Centered loading spinner with an optional caption. Used while async API
-/// calls are in flight so the user gets feedback instead of a blank screen.
 class LoadingView extends StatelessWidget {
   final String? label;
   const LoadingView({super.key, this.label});
@@ -23,8 +21,6 @@ class LoadingView extends StatelessWidget {
   }
 }
 
-/// Friendly empty state with an icon, title, and optional subtitle. Shown when
-/// a search or category returns zero meals.
 class EmptyView extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -69,8 +65,6 @@ class EmptyView extends StatelessWidget {
   }
 }
 
-/// Error state with an icon, message, and retry button. The retry callback is
-/// what fires off the failed API call again.
 class ErrorRetryView extends StatelessWidget {
   final String message;
   final VoidCallback onRetry;

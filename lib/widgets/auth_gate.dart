@@ -5,9 +5,8 @@ import '../screens/home_screen.dart';
 import '../screens/login_screen.dart';
 import '../services/auth_service.dart';
 
-/// Routes by Firebase auth state. Listens to [FirebaseAuth.authStateChanges]
-/// so sign-in and sign-out cause an immediate rebuild into the right screen,
-/// preventing access to the home screen when no user is signed in.
+/// Shows the login screen or the home screen depending on whether a user is
+/// signed in, and switches as soon as that changes.
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
 

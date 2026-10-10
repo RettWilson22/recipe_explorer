@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Shared text field used by the login and sign-up forms. Keeps the two
-/// screens visually consistent without dragging in a heavier form library.
 class AuthTextField extends StatelessWidget {
   const AuthTextField({
     super.key,

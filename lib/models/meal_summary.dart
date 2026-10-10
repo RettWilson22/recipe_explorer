@@ -1,9 +1,5 @@
-/// A lightweight meal record returned by TheMealDB `filter.php` endpoint.
-///
-/// `filter.php` only returns three fields per meal (`idMeal`, `strMeal`,
-/// `strMealThumb`), so this model is intentionally small. The full record is
-/// loaded lazily by [MealApi.fetchMealDetail] when the user opens a detail
-/// page.
+/// The id, name and thumbnail that `filter.php` returns for each meal. The
+/// full record is fetched when a detail page opens.
 class MealSummary {
   final String id;
   final String name;

@@ -10,10 +10,6 @@ import '../widgets/meal_card.dart';
 import '../widgets/status_views.dart';
 import 'detail_screen.dart';
 
-/// The list/grid screen. Shows a search bar, a horizontally scrolling row of
-/// category chips, and a 2-column grid of meal cards from the currently
-/// selected category (or the current search query). Tapping a card pushes the
-/// detail route.
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -25,18 +21,13 @@ class _HomeScreenState extends State<HomeScreen> {
   final MealApi _api = MealApi();
   final AuthService _auth = AuthService();
 
-  // Async future-of-data fields. Re-assigning these and calling setState is
-  // how each screen state (loading / error / empty / data) gets driven —
-  // FutureBuilder rebuilds the body when the future changes.
   late Future<List<MealCategory>> _categoriesFuture;
   late Future<List<MealSummary>> _mealsFuture;
 
-  // Currently selected category name. Defaults to "Beef" because TheMealDB
-  // returns a well-populated set for it, so users see content immediately.
+  // Beef has plenty of meals, so the grid isn't empty on first load.
   String _selectedCategory = 'Beef';
 
-  // Active text-search query. When non-empty, results come from search.php
-  // instead of filter.php?c=...
+  /// When non-empty, the grid shows search results instead of the category.
   String _searchQuery = '';
   Timer? _debounce;
   final TextEditingController _searchController = TextEditingController();
@@ -56,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  /// Reloads the meal grid based on the current search/category state.
   void _reloadMeals() {
     setState(() {
       if (_searchQuery.isNotEmpty) {
@@ -79,7 +69,6 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  /// Debounces user typing so we don't hammer the API on every keystroke.
   void _onSearchChanged(String value) {
     _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 350), () {

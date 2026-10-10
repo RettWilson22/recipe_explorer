@@ -1,8 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-/// Thin wrapper around [FirebaseAuth] so screens don't depend on the SDK
-/// directly. Also exposes [mapAuthError] for turning Firebase error codes
-/// into messages a user can read.
 class AuthService {
   AuthService({FirebaseAuth? auth}) : _auth = auth ?? FirebaseAuth.instance;
 
@@ -30,6 +27,7 @@ class AuthService {
   Future<void> signOut() => _auth.signOut();
 }
 
+/// Turns a Firebase error code into a message for the user.
 String mapAuthError(FirebaseAuthException e) {
   switch (e.code) {
     case 'invalid-email':
