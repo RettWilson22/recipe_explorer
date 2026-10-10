@@ -10,8 +10,6 @@ class AuthService {
 
   Stream<User?> authStateChanges() => _auth.authStateChanges();
 
-  User? get currentUser => _auth.currentUser;
-
   Future<UserCredential> signIn({
     required String email,
     required String password,
