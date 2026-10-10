@@ -47,8 +47,9 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  void _reloadMeals() {
+  void _reload() {
     setState(() {
+      _categoriesFuture = _api.fetchCategories();
       if (_searchQuery.isNotEmpty) {
         _mealsFuture = _api.searchMeals(_searchQuery);
       } else {
@@ -120,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             tooltip: 'Refresh',
-            onPressed: _reloadMeals,
+            onPressed: _reload,
             icon: const Icon(Icons.refresh_rounded),
           ),
           IconButton(
@@ -173,10 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: FutureBuilder<List<MealCategory>>(
         future: _categoriesFuture,
         builder: (context, snap) {
-          if (snap.connectionState != ConnectionState.done) {
-            return const SizedBox.shrink();
-          }
-          if (snap.hasError) return const SizedBox.shrink();
+          // snap.data is kept while a reload is in flight, so the chips stay.
           final categories = snap.data ?? const [];
           if (categories.isEmpty) return const SizedBox.shrink();
 
@@ -213,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
             message: snap.error is MealApiException
                 ? (snap.error as MealApiException).message
                 : 'Unexpected error: ${snap.error}',
-            onRetry: _reloadMeals,
+            onRetry: _reload,
           );
         }
         final meals = snap.data ?? const [];
@@ -229,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return RefreshIndicator(
           // Not awaited: the grid swaps to the loading view right away, and a
           // failed request is shown there instead of thrown from here.
-          onRefresh: () async => _reloadMeals(),
+          onRefresh: () async => _reload(),
           child: GridView.builder(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

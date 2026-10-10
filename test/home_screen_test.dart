@@ -39,4 +39,19 @@ void main() {
 
     expect(find.text('Try again'), findsOneWidget);
   });
+
+  testWidgets('categories load on retry after failing at startup',
+      (tester) async {
+    online = false;
+    await pumpHome(tester);
+    expect(find.byType(ChoiceChip), findsNothing);
+
+    online = true;
+    await tester.tap(find.text('Try again'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+
+    expect(find.widgetWithText(ChoiceChip, 'Beef'), findsOneWidget);
+    expect(find.text('Stew'), findsOneWidget);
+  });
 }
