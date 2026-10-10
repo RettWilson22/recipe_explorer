@@ -40,14 +40,12 @@ class MealDetail {
       ingredients.add(Ingredient(name: name, measure: measure));
     }
 
-    final tagsRaw = (json['strTags'] ?? '').toString();
-    final tags = tagsRaw.isEmpty
-        ? <String>[]
-        : tagsRaw
-            .split(',')
-            .map((t) => t.trim())
-            .where((t) => t.isNotEmpty)
-            .toList();
+    final tags = (json['strTags'] ?? '')
+        .toString()
+        .split(',')
+        .map((t) => t.trim())
+        .where((t) => t.isNotEmpty)
+        .toList();
 
     String? nonEmpty(dynamic v) {
       final s = (v ?? '').toString().trim();

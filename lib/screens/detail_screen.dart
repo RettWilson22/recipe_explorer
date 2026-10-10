@@ -220,9 +220,8 @@ class _DetailBody extends StatelessWidget {
           const _SectionHeader(icon: Icons.menu_book_rounded, label: 'Instructions'),
           const SizedBox(height: 12),
           Text(
-            detail.instructions?.trim().isNotEmpty == true
-                ? detail.instructions!.trim()
-                : 'No instructions were provided for this recipe.',
+            detail.instructions ??
+                'No instructions were provided for this recipe.',
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.45),
           ),
           if (detail.youtubeUrl != null || detail.sourceUrl != null) ...[
