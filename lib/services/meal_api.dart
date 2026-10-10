@@ -75,29 +75,25 @@ class MealApi {
     return MealDetail.fromJson(first);
   }
 
-  // ---------------------------------------------------------------------------
-  // Helpers
-  // ---------------------------------------------------------------------------
-
   List<MealSummary> _parseMealSummaries(Map<String, dynamic> json) {
     final meals = json['meals'];
-    if (meals is! List) return const []; // null or unexpected shape
+    // TheMealDB sends "meals": null when nothing matches.
+    if (meals is! List) return const [];
     return meals
         .whereType<Map<String, dynamic>>()
         .map(MealSummary.fromJson)
         .toList();
   }
 
-  /// Issues a GET, validates the status code, and decodes the body as JSON.
-  /// Any failure — DNS error, timeout, non-200, malformed body — is mapped to
-  /// a [MealApiException] with a human-readable message.
+  /// GETs [url] and decodes a JSON object. Network errors, timeouts, non-200
+  /// responses and bad JSON all become a [MealApiException].
   Future<Map<String, dynamic>> _getJson(String url) async {
     final http.Response response;
     try {
       response = await _client
           .get(Uri.parse(url))
           .timeout(const Duration(seconds: 15));
-    } catch (e) {
+    } on Exception {
       throw MealApiException('Network error. Check your connection.');
     }
 
@@ -109,13 +105,11 @@ class MealApi {
 
     try {
       final decoded = jsonDecode(response.body);
-      if (decoded is! Map<String, dynamic>) {
-        throw const FormatException('Top-level JSON was not an object.');
-      }
-      return decoded;
-    } catch (_) {
-      throw MealApiException('Could not read the response from the server.');
+      if (decoded is Map<String, dynamic>) return decoded;
+    } on FormatException {
+      // Falls through to the error below.
     }
+    throw MealApiException('Could not read the response from the server.');
   }
 
   void dispose() => _client.close();
