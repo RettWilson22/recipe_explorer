@@ -77,10 +77,7 @@ class Ingredient {
 
   const Ingredient({required this.name, required this.measure});
 
-  /// URL of TheMealDB's auto-generated ingredient thumbnail. Used on the detail
-  /// screen so each ingredient row has a small icon next to it.
-  String get thumbnailUrl {
-    final slug = name.trim().replaceAll(' ', '%20');
-    return 'https://www.themealdb.com/images/ingredients/$slug-Small.png';
-  }
+  /// TheMealDB's small picture for this ingredient.
+  String get thumbnailUrl =>
+      'https://www.themealdb.com/images/ingredients/${Uri.encodeComponent(name)}-Small.png';
 }
