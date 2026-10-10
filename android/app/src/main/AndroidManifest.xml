@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Debug and profile builds get this from their own manifests; release needs it here. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="recipe_explorer"
         android:name="${applicationName}"
